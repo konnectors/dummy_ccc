@@ -4936,7 +4936,7 @@ class DummycliskContentScript extends cozy_clisk_dist_contentscript__WEBPACK_IMP
       <option>10</option>
       <option>20</option>
     </select> </p>
-    <p><input type="submit" value="launch" class="button"></p>
+    <p><input type="submit" value="Launch" class="button"></p>
     <p id="validation" hidden>Launching</p>
     </div>
     `
