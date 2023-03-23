@@ -1,84 +1,81 @@
 import { ContentScript } from 'cozy-clisk/dist/contentscript'
-import Minilog from '@cozy/minilog'
-const log = Minilog('ContentScript')
-Minilog.enable()
 
-const baseUrl = 'https://toscrape.com'
-const defaultSelector = "a[href='http://quotes.toscrape.com']"
-const loginLinkSelector = `[href='/login']`
-const logoutLinkSelector = `[href='/logout']`
+const baseUrl = 'about:blank'
 
-class TemplateContentScript extends ContentScript {
+class DummycliskContentScript extends ContentScript {
   async ensureAuthenticated() {
-    await this.goto(baseUrl)
-    await this.waitForElementInWorker(defaultSelector)
-    await this.runInWorker('click', defaultSelector)
-    // wait for both logout or login link to be sure to check authentication when ready
-    await Promise.race([
-      this.waitForElementInWorker(loginLinkSelector),
-      this.waitForElementInWorker(logoutLinkSelector)
-    ])
-    const authenticated = await this.runInWorker('checkAuthenticated')
-    if (!authenticated) {
-      this.log('info', 'Not authenticated')
-      await this.showLoginFormAndWaitForAuthentication()
-    }
     return true
   }
 
-  async checkAuthenticated() {
-    return Boolean(document.querySelector(logoutLinkSelector))
+  printComboBox() {
+    // Possible CSS tested
+    // const box = `<div style="font-size: 50px">  // no stretch of dropdown, less nice
+    const html = `<div style="text-align: center;transform: scale(5) translateY(50%)">
+    <p>Dummyclisk konnector </p>
+    <p><label for="event">Event to simulate:</label><br>
+    <select id="event">
+      <option>SUCCESS</option>
+      <option>VENDOR_DOWN</option>
+      <option>UNKNOWN_ERROR</option>
+      <option>USER_ACTION_NEEDED</option> 
+    </select> </p>
+    <p><label for="timeout">Delay before exec (s):</label><br>
+    <select id="timeout">
+      <option>0</option>
+      <option>5</option>
+      <option>10</option>
+      <option>20</option>
+    </select> </p>
+    <p><input type="submit" value="Launch" class="button"></p>
+    <p id="validation" hidden>Launching</p>
+    </div>
+    `
+    document.body.innerHTML = html
   }
 
-  async showLoginFormAndWaitForAuthentication() {
-    log.debug('showLoginFormAndWaitForAuthentication start')
-    await this.clickAndWait(loginLinkSelector, '#username')
-    await this.setWorkerState({ visible: true })
-    await this.runInWorkerUntilTrue({
-      method: 'waitForAuthenticated'
-    })
-    await this.setWorkerState({ visible: false })
-  }
-
-  async fetch(context) {
-    log.debug(context, 'fetch context')
-    await this.goto('https://books.toscrape.com')
-    await this.waitForElementInWorker('#promotions')
-    const bills = await this.runInWorker('parseBills')
-
-    for (const bill of bills) {
-      await this.saveFiles([bill], {
-        contentType: 'image/jpeg',
-        fileIdAttributes: ['filename'],
-        context
+  async waitForUserEntry() {
+    return await new Promise(resolve => {
+      const button = document.querySelector('.button')
+      button.addEventListener('click', () => {
+        resolve(this.extractData())
       })
-    }
+    })
   }
 
-  async getUserDataFromWebsite() {
-    return {
-      sourceAccountIdentifier: 'defaultTemplateSourceAccountIdentifier'
-    }
+  extractData() {
+    document.getElementById('validation').hidden = false
+    const timeout = document.querySelector('#timeout').value
+    const event = document.querySelector('#event').value
+    return { event, timeout }
   }
 
-  async parseBills() {
-    const articles = document.querySelectorAll('article')
-    return Array.from(articles).map(article => ({
-      amount: normalizePrice(article.querySelector('.price_color')?.innerHTML),
-      filename: article.querySelector('h3 a')?.getAttribute('title'),
-      fileurl:
-        'https://books.toscrape.com/' +
-        article.querySelector('img')?.getAttribute('src')
-    }))
+  async fetch() {
+    await this.goto(baseUrl)
+    await this.runInWorker('printComboBox')
+    await this.setWorkerState({ visible: true })
+    const { event, timeout } = await this.runInWorker('waitForUserEntry')
+    await this.setWorkerState({ visible: false })
+    this.log('debug', `Status is a ${event} and Timeout is ${timeout}`)
+
+    const timeoutInMs = parseInt(timeout) * 1000
+    if (Number.isInteger(parseInt(timeout)) && timeoutInMs !== 0) {
+      this.log('info', `Dummy is waiting for ${timeout} seconds`)
+      await new Promise(resolve => setTimeout(resolve, timeoutInMs))
+    }
+
+    if (event != 'SUCCESS') {
+      this.log('info', `Dummy simulating ${event}`)
+      throw new Error(event)
+    }
+    this.log('info', 'Dummy simulating SUCCESS')
   }
 }
 
-// Convert a price string to a float
-function normalizePrice(price) {
-  return parseFloat(price.replace('£', '').trim())
-}
-
-const connector = new TemplateContentScript()
-connector.init({ additionalExposedMethodsNames: ['parseBills'] }).catch(err => {
-  log.warn(err)
-})
+const connector = new DummycliskContentScript()
+connector
+  .init({
+    additionalExposedMethodsNames: ['printComboBox', 'waitForUserEntry']
+  })
+  .catch(err => {
+    this.log('warn', err)
+  })

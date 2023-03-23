@@ -1,13 +1,13 @@
 {
   "version": "1.0.0",
-  "name": "Template",
+  "name": "Dummyclisk",
   "type": "konnector",
   "language": "node",
-  "icon": "icon.png",
-  "slug": "template",
-  "source": "git@github.com:konnectors/template_ccc.git",
+  "icon": "dummy.svg",
+  "slug": "dummyclisk",
+  "source": "git@github.com:konnectors/dummyclisk.git",
   "editor": "Cozy",
-  "vendor_link": "https://books.toscrape.com/",
+  "vendor_link": "about:blank",
   "categories": [
     "transport"
   ],
@@ -31,8 +31,8 @@
   },
   "locales": {
     "fr": {
-      "short_description": "Récupère la liste de livres",
-      "long_description": "Récupère la liste de livre sur le site exemple",
+      "short_description": "Connecteur dummy pour test",
+      "long_description": "Connecteur dummy pour test",
       "permissions": {
         "bills": {
           "description": "Utilisé pour sauver les données des factures"
