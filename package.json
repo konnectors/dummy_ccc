@@ -1,14 +1,14 @@
 {
-  "name": "template",
+  "name": "dummyclisk",
   "version": "1.0.0",
   "license": "AGPL-3.0",
   "repository": {
     "type": "git",
-    "url": "git@github.com:konnectors/template_ccc.git"
+    "url": "git@github.com:konnectors/dummyclisk.git"
   },
   "dependencies": {
     "@cozy/minilog": "^1.0.0",
-    "cozy-clisk": "^0.9.2",
+    "cozy-clisk": "^0.10.0",
     "date-fns": "^2.29.3"
   },
   "eslintConfig": {
