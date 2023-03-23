@@ -3,11 +3,11 @@
   "name": "Dummyclisk",
   "type": "konnector",
   "language": "node",
-  "icon": "icon.png",
+  "icon": "dummy.svg",
   "slug": "dummyclisk",
   "source": "git@github.com:konnectors/dummyclisk.git",
   "editor": "Cozy",
-  "vendor_link": "https://books.toscrape.com/",
+  "vendor_link": "about:blank",
   "categories": [
     "transport"
   ],
