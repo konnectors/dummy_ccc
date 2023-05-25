@@ -17,7 +17,7 @@ class DummycliskContentScript extends ContentScript {
       <option>SUCCESS</option>
       <option>VENDOR_DOWN</option>
       <option>UNKNOWN_ERROR</option>
-      <option>USER_ACTION_NEEDED</option> 
+      <option>USER_ACTION_NEEDED</option>
     </select> </p>
     <p><label for="timeout">Delay before exec (s):</label><br>
     <select id="timeout">
@@ -25,7 +25,10 @@ class DummycliskContentScript extends ContentScript {
       <option>5</option>
       <option>10</option>
       <option>20</option>
+      <option>3600</option>
     </select> </p>
+    <p><label for="url">Go to url</label><br>
+    <input id="url" type="text" value=""></p>
     <p><input type="submit" value="Launch" class="button"></p>
     <p id="validation" hidden>Launching</p>
     </div>
@@ -46,16 +49,25 @@ class DummycliskContentScript extends ContentScript {
     document.getElementById('validation').hidden = false
     const timeout = document.querySelector('#timeout').value
     const event = document.querySelector('#event').value
-    return { event, timeout }
+    const url = document.querySelector('#url').value
+    return { event, timeout, url }
   }
 
   async fetch() {
     await this.goto(baseUrl)
     await this.runInWorker('printComboBox')
     await this.setWorkerState({ visible: true })
-    const { event, timeout } = await this.runInWorker('waitForUserEntry')
-    await this.setWorkerState({ visible: false })
-    this.log('debug', `Status is a ${event} and Timeout is ${timeout}`)
+    const { event, timeout, url } = await this.runInWorker('waitForUserEntry')
+
+    if (url.length > 0) {
+      await this.goto(url)
+    } else {
+      await this.setWorkerState({ visible: false })
+    }
+    this.log(
+      'debug',
+      `Status is a ${event} and Timeout is ${timeout} and url is ${url}`
+    )
 
     const timeoutInMs = parseInt(timeout) * 1000
     if (Number.isInteger(parseInt(timeout)) && timeoutInMs !== 0) {
