@@ -4,6 +4,10 @@ const baseUrl = 'about:blank'
 
 class DummycliskContentScript extends ContentScript {
   async ensureAuthenticated() {
+    this.log('debug', 'Debug level, Starting ensureAuthenticated')
+    this.log('info', 'Info level, Starting ensureAuthenticated')
+    this.log('warn', 'Warn level, Starting ensureAuthenticated')
+    this.log('error', 'Error level, Starting ensureAuthenticated')
     return true
   }
 
@@ -54,6 +58,10 @@ class DummycliskContentScript extends ContentScript {
   }
 
   async fetch() {
+    this.log('debug', 'Debug level, Starting fetch')
+    this.log('info', 'Info level, Starting fetch')
+    this.log('warn', 'Warn level, Starting fetch')
+    this.log('error', 'Error level, Starting fetch')
     await this.goto(baseUrl)
     await this.runInWorker('printComboBox')
     await this.setWorkerState({ visible: true })
