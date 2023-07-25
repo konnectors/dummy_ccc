@@ -5431,6 +5431,13 @@ class DummycliskContentScript extends cozy_clisk_dist_contentscript__WEBPACK_IMP
     return { event, timeout, url }
   }
 
+  async getUserDataFromWebsite() {
+    this.log('info', '🤖 getUserDataFromWebsite')
+    return {
+      sourceAccountIdentifier: 'defaultDummyCliskAccountIdentifier'
+    }
+  }
+
   async fetch() {
     this.log('debug', 'Debug level, Starting fetch')
     this.log('info', 'Info level, Starting fetch')
