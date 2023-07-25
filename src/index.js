@@ -57,6 +57,13 @@ class DummycliskContentScript extends ContentScript {
     return { event, timeout, url }
   }
 
+  async getUserDataFromWebsite() {
+    this.log('info', '🤖 getUserDataFromWebsite')
+    return {
+      sourceAccountIdentifier: 'defaultDummyCliskAccountIdentifier'
+    }
+  }
+
   async fetch() {
     this.log('debug', 'Debug level, Starting fetch')
     this.log('info', 'Info level, Starting fetch')
