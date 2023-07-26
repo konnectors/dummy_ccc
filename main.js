@@ -1312,8 +1312,9 @@ var ContentScript = /*#__PURE__*/function () {
       }
 
       var now = new Date().toISOString();
-      var timestamp = now + '-' + LOG_NUMBER.padStart(4, '0');
-      LOG_NUMBER = LOG_NUMBER + 1;
+      var timestamp = now; //+ '-' + LOG_NUMBER.padStart(4, '0')
+      //LOG_NUMBER = LOG_NUMBER + 1
+
       (_this$bridge2 = this.bridge) === null || _this$bridge2 === void 0 ? void 0 : _this$bridge2.emit('log', {
         timestamp: timestamp,
         level: newLevel,
