@@ -1,0 +1,46 @@
+{
+  "version": "1.0.0",
+  "name": "Dummyclisk",
+  "type": "konnector",
+  "language": "node",
+  "icon": "dummy.svg",
+  "slug": "dummyclisk",
+  "source": "git@github.com:konnectors/dummyclisk.git",
+  "editor": "Cozy",
+  "vendor_link": "about:blank",
+  "categories": [
+    "transport"
+  ],
+  "fields": { },
+  "clientSide": true,
+  "langs": [
+    "fr"
+  ],
+  "folders": [
+    {
+      "defaultDir": "$administrative/$konnector/$account"
+    }
+  ],
+  "permissions": {
+    "bills": {
+      "type": "io.cozy.bills"
+    },
+    "files": {
+      "type": "io.cozy.files"
+    }
+  },
+  "locales": {
+    "fr": {
+      "short_description": "Connecteur dummy pour test",
+      "long_description": "Connecteur dummy pour test",
+      "permissions": {
+        "bills": {
+          "description": "Utilisé pour sauver les données des factures"
+        },
+        "files": {
+          "description": "Utilisé pour sauvegarder les factures"
+        }
+      }
+    }
+  }
+}
