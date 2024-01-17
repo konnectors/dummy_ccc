@@ -3,8 +3,8 @@ node_js:
 - 16.20.2
 env:
   global:
-  # REGISTRY_TOKEN slug=dummyclisk editor=cozy space=cozy_ccc
-  - secure: YvCnFsqwn2n9HVCHXvUq4PN6k2FJMC3gJ/nqXvvXzgRKGQjem5eZHMOIS0N/fAT96OMI8dgWKgj5QGBbWR++PinxiNx7gPzlj7qfXlPPys0eSuLStA5bFEF+uXFHDmyhQijwHk+usyET4DCfGgL9mPVM14yfFcgfHX0hV3lMd6IJX3l2xIu4tgn5sFU8u9h4XB4aDsdRJ/ic2IJvRoPzUgFO0SvQvEcNIhYA46BuNBdaEpGBLVno2xbDtjZBm/aY/Bbnm1Stx9MIm4NhnsNDbCEDm+pqdNBnxB+ql2cPwkJN3xQ9BoTs73EUd0zxS29VZ4rfMP+YeyMbxtWYYjxyTgU0YHQs4p55hWcU6YXzFZhirq9EHv347DjwacFK5OlapyyuQbIsFggJGbgUQ/VcRMLWppJpzN7ksyINwmHyUQ5P+ueRRzRFV7Sx4XPNzT3u3YTJshE3t5nyRjKrMhahbuE+IpmmZHBKrnQ080W86chwIHKmBJ3Ro6ejunxlDOgbSMXWK1aswbBYRcn8NISaqhaIzBTleqBI9UwFKXXfwMeyVAZKCCtopnU3iqx5Z/CO62s/EsPmh2V/CaGOD/nCgW3+I8cm8nAADeeDur5lvCZ5qpfVwWB7lOKe2myQk/BlWYXvc2ZuY5WmV4edJxtRsa1kD//208s56GYVh89Yj+Q=
+  # REGISTRY_TOKEN slug=dummyclisk editor=cozy space=default
+  - secure: Z4W0uW7C8qMT+4NJzKLbr6to5kL1k2G9MODoicAU7zCUP3KSqLekbrHTx2OKhC/ADBqenHljMtjhM3ZBB/OEBGsVRgQP1tuBW0W5avId06F7MEhbnoM8vHkTQjMpsfNJs7wMVi2pMNwP5qK3wc/dm85efKOCxXBSG3Gs37cO3J9Gu5Kh6Xas/vvKVNPAVSlW0nGwfpkUEMF11XEe46h6SIjuTR9ChCmIGqKzy9Pa8+e5zIxzRsx1QweIv/Cprv5QYl4M4UdXoV5QYPLsKkig2fncCML45jyIqNOue0IdvgvQ96qi0iA4g95hSnsbQRPGr6khu1LS8Zby44GsCqt4qo2GVqujmopxQ+TwFnVvy7qZqxua4SW0bshULkcfs7zlUqeDXiBskzxRQidN9sGM2gmCa8DyzizEXFldhXEgBY2IC2f3D5cqOptuokq0tXh0kXH9x+U66XADxnENNbJ/LxeN0dRg2aIDd9peR76dtjWqAIZiTEA8eIBlhRW0YgP5JJFG3eavwalL459ZdCoDtPvFukWZIvGN+PGCKW8mkkobz1QDcnvZb2Gho9JU4pTjpb2qJrndDP0ZKbbPUjutcDRvIhaa9eLv23YXa5ZkcFoOymlCcu75dS+o1VcotP2JV02HCEYXUsHD1NWumiaO/pvKYtuJosJj2lLQOJZJsU4=
 cache:
   yarn: true
   directories:
@@ -19,7 +19,7 @@ script:
 deploy:
 - provider: script
   skip-cleanup: true
-  script: DEPLOY_BRANCH=build yarn deploy && yarn cozyPublish --space cozy_ccc
+  script: DEPLOY_BRANCH=build yarn deploy && yarn cozyPublish
   on:
     branch:
     - master
@@ -27,7 +27,6 @@ deploy:
 - provider: script
   skip-cleanup: true
   script: DEPLOY_BRANCH=build yarn deploy && yarn cozyPublish --postpublish mattermost
-    --space cozy_ccc
   on:
     tags: true
 before_install:
