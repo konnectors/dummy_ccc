@@ -6279,7 +6279,7 @@ class DummycliskContentScript extends cozy_clisk_dist_contentscript__WEBPACK_IMP
       <option>3600</option>
     </select> </p>
     <p><label for="url">Go to url</label><br>
-    <input id="url" type="text" value=""></p>
+    <input id="url" type="url" value=""></p>
     <p><input type="submit" value="Launch" class="button"></p>
     <p id="validation" hidden>Launching</p>
     </div>
