@@ -6268,6 +6268,7 @@ class DummycliskContentScript extends cozy_clisk_dist_contentscript__WEBPACK_IMP
       <option>SUCCESS</option>
       <option>VENDOR_DOWN</option>
       <option>UNKNOWN_ERROR</option>
+      <option>UNKNOWN_ERROR.PARTIAL_SYNC</option>
       <option>USER_ACTION_NEEDED</option>
     </select> </p>
     <p><label for="timeout">Delay before exec (s):</label><br>
